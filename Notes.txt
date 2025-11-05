@@ -1,0 +1,445 @@
+Video 04:- How Node Works
+-> Node.js is single-threaded and asynchronous.
+-> Node.js is not suitable for CPU-intensive applications; it is best used for data-intensive and real-time applications
+-> Single-threaded: Node.js uses a single main thread to handle requests.
+-> Asynchronous: It uses non-blocking I/O operations, allowing it to handle many requests efficiently without waiting for one to complete.
+-> Not for CPU-heavy tasks: Since it runs on a single thread, heavy computations (like video processing, image manipulation, or complex algorithms) can block the event loop.
+-> Ideal use cases: Real-time chat apps, streaming
+
+Video 05:- Installing Node
+-> node --versionv (In company laptop:- 22.13.1)
+
+Video 07:- Code Structure
+-> Node module system
+-> Node package manager (NPM)
+-> Building RESTful APIs wiht Express
+-> Asynchronous javascript
+-> Storing data in MongoDB
+-> Authentication and authorization
+-> Handling and logging errors
+-> Unit and integration testing
+-> Test-driven development (TDD)
+-> Deployment
+
+
+** Summary of video(1-7) **
+-> Node is a runtime environment for executing JS code.
+-> Essentially, Node is a C++ program that embeds Chrome’s v8 engine, the fastest JS engine in the world.
+-> We use Node to build fast and scalable networking applications. It’s a perfect choice for building RESTful services.
+-> Node applications are single-threaded. That means a single thread is used to serve all clients.
+-> Node applications are asynchronous or non-blocking by default. That means when the application involves I/O operations (eg accessing the file system or the network), the thread doesn’t wait (or block) for the result of the operation. It is released to serve other clients.
+-> This architecture makes Node ideal for building I/O-intensive applications.
+-> You should avoid using Node for CPU-intensive applications, such as a video encoding service. Because while executing these operations, other clients have to wait for the single thread to finish its job and be ready to serve them.
+-> In Node, we don’t have browser environment objects such as window or the document object. Instead, we have other objects that are not available in browsers, such as objects for working with the file system, network, operating system, etc.
+
+
+
+
+
+Video 11:- Global Object
+1. Global object (we can access it anywhere in any file)
+-> console object
+-> setTimeout()
+-> clearTimeout()
+-> setInterval()
+-> clearInterval()
+ 
+2. window object
+-> All the functions and variables which are defined globally we can access them using window object on browser.
+-> In node we do not have window and document object we have global object.
+ 
+-> Ex:-
+var message = "Hello";
+console.log(global.message) // undefined
+-> means all the variables and functions which we have added in any file like in app.js they are not added in global object. The only scope to acces those variables and functions is
+that file(app.js) itself they are not available outside of that file(app.js). This is because of node modular system.
+ 
+Video 12:- Module
+3. Notes
+-> In node every file is a module and the variables and functions defined in that file are available into that file(module) only.
+ 
+-> In Node.js, console.log(module);
+-> It logs the current module object, which includes metadata about the file you’re in.
+-> you’ll typically see in the output
+Module {
+  id: '.',
+  path: '/your/project/folder',
+  exports: {},
+  parent: null,
+  filename: '/your/project/folder/index.js',
+  loaded: false,
+  children: [],
+  paths: [
+    '/your/project/folder/node_modules',
+    '/your/project/node_modules',
+    ...
+  ]
+}
+ 
+-> Key properties:
+-> id: Identifier for the module. 'module.id' is usually '.' for the entry file.
+-> path: Directory path of the module.
+-> exports: Object that will be exported from this module.
+-> filename: Full path to the current module file.
+-> loaded: Boolean indicating if the module has been loaded.
+-> parent: The module that required this one.
+-> children: List of modules required by this module.
+-> paths: Module resolution paths (used to look for node_modules).
+ 
+Video 15:- Module Wrapper Function
+4. Notes
+-> Understand module wrapper function's all arguments:- exports, require, module, __filename, __dirname
+-> Understand some modules
+:- File system - to work with files
+:- HTTP - we can create web servers that listen for http requests
+:- OS - to work it operating system
+:- Path - which gives us a bunch of utility functions for working with paths
+:- Process - gives us the information about the current process
+:- Query strings - which is useful in building http services
+:- Stream - which allows us to work with streams of data
+ 
+5. OS module
+-> Before node we can not get this kind of information using js. JS used to run only inside of a browser and we can only work with the window and document object.
+we can not get the information about the OS but using node our JS code can executed outside of a browser(on the server).
+-> Using node we can get information about OS, we can work with files, we can work with the network, we can build a web servers they can listen the HTTP requests on a given port.
+ 
+-> Ex:-
+const os = require("os");
+var totalMemory = os.totalmem(); // Returns the total amount of system memory in bytes as an integer.
+var freememory = os.freemem(); // Returns the amount of free system memory in bytes as an integer.
+ 
+console.log(`Total Memory:-`, totalMemory);
+console.log(`Free Memory:-`, freememory);
+ 
+6. Files system module
+-> fs.readdir() - to read the contents of the current directory(folder)
+-> Ex:-
+const fs = require('fs');
+ 
+fs.readdir('./', function (err, files) {
+    if (err) console.log("Error:-", err)
+    else console.log("Result:-", files)
+})
+ 
+-> fs.readdir('./', callback) reads the contents of the directory ('./' means current folder).
+-> It's asynchronous, so the callback runs when the result is ready.
+-> files will be an array of file and folder names in the current directory.
+-> If there's an error (e.g. directory doesn't exist or no permission), err will contain it.
+ 
+-> Ex:-
+const fs = require('fs');
+ 
+const files = fs.readdirSync('./');
+console.log(files);
+ 
+-> This does the same thing synchronously, meaning it blocks further code execution until the result is ready.
+-> Use it only if you don’t need non-blocking behavior.
+
+
+
+video 24: Introduction
+-> npm i -g npm@5.5.1
+
+video 25: Package.json
+-> npm init
+
+video 28: Package Dependencies
+-> npm i mongoose
+
+video 30: Semantic Versioning
+-> ~ (tilde) and ^ (caret)
+-> major.minor.patch
+-> Caret ( ^ ) — Allow minor and patch updates
+-> Tilde ( ~ ) — Allow only patch updates
+
+video 35: Dev Dependencies
+-> Dev dependencies are packages needed during development (testing, linting, building) but not in production.
+-> Regular dependencies: Required to run your app (e.g., mongoose, underscore)
+-> Dev dependencies: Only needed during development (e.g., jshint, testing tools, build tools)
+-> npm install --save-dev <package-name> (add a package as a dev dependency)
+
+
+
+******************************* Video PDF ***********************************
+***** Section: 1 (Getting started) *****
+-> Getting Started with Node
+-> So, in this section, you learned that:
+-> Node is a runtime environment for executing JS code.
+-> Essentially, Node is a C++ program that embeds Chrome’s v8 engine, the fastest JS engine in the world.
+-> We use Node to build fast and scalable networking applications. It’s a perfect choice for building RESTful services.
+-> Node applications are single-threaded. That means a single thread is used to serve all clients.
+-> Node applications are asynchronous or non-blocking by default. That means when the application involves I/O operations (eg accessing the file system or the network), the thread doesn’t wait (or block) for the result of the operation. It is released to serve other clients.
+-> This architecture makes Node ideal for building I/O-intensive applications.
+-> You should avoid using Node for CPU-intensive applications, such as a video encoding service. Because while executing these operations, other clients have to wait for the single thread to finish its job and be ready to serve them.
+-> In Node, we don’t have browser environment objects such as window or the document object. Instead, we have other objects that are not available in browsers, such as objects for working with the file system, network, operating system, etc.
+
+***** Section: 2 (Node module system) *****
+-> Node Core
+-> So, in this section, you learned that:
+-> We don’t have the window object in Node.
+-> The global object in Node is “global”.
+-> Unlike browser applications, variables we define are not added to the “global” object.
+-> Every file in a Node application is a module. Node automatically wraps the code in each file with an IIFE (Immediately-invoked Function Expression) to create scope. So, variables and functions defined in one file are only scoped to that file and not visible to other files unless explicitly exported.
+-> To export a variable or function from a module, you need to add them to
+module.exports:
+module.exports.sayHello = sayHello;
+-> To load a module, use the require function. This function returns the module.exports object exported from the target module:
+const logger = require(‘./logger’);
+-> Node has a few built-in modules that enable us to work with the file system, path objects, network, operating system, etc.
+-> EventEmitter is one of the core classes in Node that allows us to raise (emit) and handle events. Several built-in classes in Node derive from EventEmitter.
+- To create a class with the ability to raise events, we should extend EventEmitter:
+class Logger extends EventEmitter {}
+
+***** Section: 3 (Node package manager) *****
+-> NPM
+-> So, in this section, you learned that:
+-> Every Node application has a package.json file that includes metadata about the application. This includes the name of the application, its version, dependencies, etc.
+-> We use NPM to download and install 3rd-party packages from NPM registry:
+-> All the installed packages and their dependencies are stored under node_modules folders. This folder should be excluded from the source control.
+-> Node packages follow semantic versioning: major.minor.patch
+-> Useful NPM commands are:
+// Install a package
+npm i <packageName>
+
+// Install a specific version of a package
+npm i <packageName>@<version>
+
+// Install a package as a development dependency
+npm i <packageName> —save-dev
+
+// Uninstall a package
+npm un <packageName>
+
+// List installed packages
+npm list —depth=0
+
+// View outdated packages
+npm outdated
+
+// Update packages
+npm update
+
+-> To install/uninstall packages globally, use -g flag.
+
+***** Section 4: (Building RESTful APIs using Express) *****
+-> Building RESTful APIs with Express
+-> So, in this section, you learned that:
+
+- REST defines a set of conventions for creating HTTP services:
+- POST: to create a resource
+- PUT: to update it
+- GET: to read it
+- DELETE: to delete it
+- Express is a simple, minimalistic and lightweight framework for building web
+servers.
+
+// Build a web server
+const express = require(‘express’);
+const app = express();
+
+// Creating a course
+app.post(‘/api/courses’, (req, res) => {
+// Create the course and return the course object
+resn.send(course);
+});
+
+// Getting all the courses
+app.get(‘/api/courses’, (req, res) => {
+// To read query string parameters (?sortBy=name)
+const sortBy = req.query.sortBy;
+
+// Return the courses
+
+res.send(courses);
+});
+
+// Getting a single course
+app.get(‘/api/courses/:id’, (req, res) => {
+const courseId = req.params.id;
+
+// Lookup the course
+// If not found, return 404
+res.status(404).send(‘Course not found.’);
+
+// Else, return the course object
+res.send(course);
+});
+
+// Updating a course
+app.put(‘/api/courses/:id’, (req, res) => {
+// If course not found, return 404, otherwise update it
+// and return the updated object.
+});
+
+// Deleting a course
+app.delete(‘/api/courses/:id’, (req, res) => {
+// If course not found, return 404, otherwise delete it
+// and return the deleted object.
+});
+
+// Listen on port 3000
+app.listen(3000, () => console.log(‘Listening...’));
+
+- We use Nodemon to watch for changes in files and automatically restart the
+node process.
+- We can use environment variables to store various settings for an application. To
+read an environment variable, we use process.env.
+
+// Reading the port from an environment variable
+const port = process.env.PORT || 3000;
+app.listen(port);
+
+- You should never trust data sent by the client. Always validate! Use Joi package
+to perform input validation.
+
+***** Section 5: (Express Advanced Topics) *****
+-> Express: Advanced Topics
+So, in this section, you learned that:
+
+- A middleware function is a function that takes a request object and either terminates the request/response cycle or passes control to another middleware function.
+- Express has a few built-in middleware functions:
+- json(): to parse the body of requests with a JSON payload
+- urlencoded(): to parse the body of requests with URL-encoded payload
+- static(): to serve static files
+- You can create custom middleware for cross-cutting concerns, such as logging, authentication, etc.
+
+// Custom middleware (applied on all routes)
+app.use(function(req, res, next)) {
+// ...
+next();
+}
+
+// Custom middleware (applied on routes starting with /api/admin)
+app.use(‘/api/admin’, function(req, res, next)) {
+// ...
+next();
+}
+
+- We can detect the environment in which our Node application is running (development, production, etc) using process.env.NODE_ENV and app.get(‘env’).
+
+- The config package gives us an elegant way to store configuration settings for our applications.
+- We can use the debug package to add debugging information to an application. Prefer this approach to console.log() statements.
+- To return HTML markup to the client, use a templating engine. There are various templating engines available out there. Pug, EJS and Mustache are the most popular ones.
+
+***** Section 6: (Express Advanced Topics) *****
+
+***** Section 7: (CRUD operation using MongoDB) *****
+-> .save() is a method used to save a document (record) into a collection in your database.
+
+-> .find()
+    .or([{ author: "Mosh" }, { isPublished: true }])
+    .limit(10)
+    .sort({ name: 1 })
+    .select({ name: 1, tags: 1 });
+-> 
+.find() → find all documents
+.or([...]) → match if author is "Mosh" or isPublished is true
+.limit(10) → return only 10 results
+.sort({ name: 1 }) → sort by name A→Z
+.select({ name, tags }) → show only name and tags fields
+
+-> $eq → equal → { price: { $eq: 10 } }
+-> $ne → not equal → { price: { $ne: 10 } }
+-> $gt → greater than → { price: { $gt: 10 } }
+-> $gte → greater than or equal → { price: { $gte: 10 } }
+-> $lt → less than → { price: { $lt: 10 } }
+-> $lte → less than or equal → { price: { $lte: 10 } }
+-> $in → matches any in array → { price: { $in: [10, 20] } }
+-> $nin → not in array → { price: { $nin: [10, 20] } }
+
+-> .find({ author: /^Mosh/ })       ^ → means starts with
+-> .find({ author: /Hamedani$/ })   $ → means ends with
+-> .find({ author: /^Mosh/i })      // starts with "Mosh" (case-insensitive)
+-> .find({ author: /Hamedani$/i })  // ends with "Hamedani" (case-insensitive)
+
+-> .find({ author: /.*Mosh.*/ })    Finds documents where author contains “Mosh”, Case-sensitive → matches "Mosh", but not "mosh" or "MOSH"
+-> .find({ author: /.*Mosh.*/i })   Finds documents where author contains “Mosh”, Case-insensitive → matches "Mosh", "mosh", "MOSH", etc.
+
+-> .countDocuments()  gives you number of matching docs
+
+-> const pageNumber = 2;
+   const pageSize = 10;
+-> .skip((pageNumber - 1) * pageSize) So it skips the first 10 documents, showing the next set (page 2).
+
+
+
+
+
+
+-> CRUD Operations using Mongoose and MongoDB
+So, in this section, you learned that:
+- MongoDB is an open-source document database. It stores data in flexible, JSON- like documents.
+- In relational databases we have tables and rows, in MongoDB we have collections and documents. A document can contain sub-documents.
+- We don’t have relationships between documents.
+- To connect to MongoDB:
+
+// Connecting to MongoDB
+const mongoose = require(‘mongoose’);
+mongoose.connect(‘mongodb://localhost/playground')
+.then(() => console.log(‘Connected...’))
+.catch(err => console.error(‘Connection failed...’));
+
+- To store objects in MongoDB, we need to define a Mongoose schema first. The schema defines the shape of documents in MongoDB.
+
+// Defining a schema
+const courseSchema = new mongoose.Schema({
+name: String,
+price: Number
+});
+
+- We can use a SchemaType object to provide additional details:
+
+// Using a SchemaType object
+const courseSchema = new mongoose.Schema({
+isPublished: { type: Boolean, default: false }
+});
+
+- Supported types are: String, Number, Date, Buffer (for storing binary data), Boolean and ObjectID.
+- Once we have a schema, we need to compile it into a model. A model is like a class. It’s a blueprint for creating objects:
+
+// Creating a model
+const Course = mongoose.model(‘Course’, courseSchema);
+
+CRUD Operations
+
+// Saving a document
+let course = new Course({ name: ‘...’ });
+course = await course.save();
+
+// Querying documents
+const courses = await Course
+.find({ author: ‘Mosh’, isPublished: true })
+.skip(10)
+.limit(10)
+.sort({ name: 1, price: -1 })
+.select({ name: 1, price: 1 });
+
+// Updating a document (query first)
+const course = await Course.findById(id);
+if (!course) return;
+course.set({ name: ‘...’ });
+course.save();
+
+// Updating a document (update first)
+const result = await Course.update({ _id: id }, {
+$set: { name: ‘...’ }
+});
+
+// Updating a document (update first) and return it
+const result = await Course.findByIdAndUpdate({ _id: id }, {
+$set: { name: ‘...’ }
+}, { new: true });
+
+// Removing a document
+const result = await Course.deleteOne({ _id: id });
+const result = await Course.deleteMany({ _id: id });
+const course = await Course.findByIdAndRemove(id);
+
+
+
+
+
+
+
+
+
